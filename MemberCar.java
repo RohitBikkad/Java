@@ -1,4 +1,3 @@
-package com.data.main;
 
 public class MemberCar {
 	
