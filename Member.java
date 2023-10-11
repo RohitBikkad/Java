@@ -1,125 +1,108 @@
-package com.demo.model;
+package com.data.main;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Member {
 	
 	private Long id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String email;
-	private String contactNumber;
-	private String licenseNumber;
-	private Date licenseStartDate;
-	private Date licenseExpiryDate;
-	
+	private String contact;
+	private String license;
+	private ArrayList<MemberCar> carList =new ArrayList<>();
 	
 	public Member() {
 		super();
+		
 	}
-	
-	public Member(Long id, String firstName, String lastName, String email, String contactNumber, String licenseNumber,
-			Date licenseStartDate, Date licenseExpiryDate) {
+
+	public Member(Long id, String name, String email, String contact, String license, ArrayList<MemberCar> carList) {
 		super();
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.email = email;
-		this.contactNumber = contactNumber;
-		this.licenseNumber = licenseNumber;
-		this.licenseStartDate = licenseStartDate;
-		this.licenseExpiryDate = licenseExpiryDate;
+		this.contact = contact;
+		this.license = license;
+		this.carList = carList;
 	}
-
-
-
+	
+	public Member(Long memberId, String firstName, String lastName, String email2, String contactNumber,
+			String licenseNumber) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.contact = contact;
+		this.license = license;
+		// TODO Auto-generated constructor stub
+	}
 
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getFirstName() {
-		return firstName;
+
+	public String getName() {
+		return name;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getContactNumber() {
-		return contactNumber;
-	}
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-	public String getLicenseNumber() {
-		return licenseNumber;
-	}
-	public void setLicenseNumber(String licenseNumber) {
-		this.licenseNumber = licenseNumber;
-	}
-	public Date getLicenseStartDate() {
-		return licenseStartDate;
-	}
-	public void setLicenseStartDate(Date licenseStartDate) {
-		this.licenseStartDate = licenseStartDate;
-	}
-	public Date getLicenseExpiryDate() {
-		return licenseExpiryDate;
-	}
-	public void setLicenseExpiryDate(Date licenseExpiryDate) {
-		this.licenseExpiryDate = licenseExpiryDate;
+
+	public String getContact() {
+		return contact;
 	}
 
-
-   
-
-    @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((contactNumber == null) ? 0 : contactNumber.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result;
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Member other = (Member) obj;
-		if (contactNumber == null) {
-			if (other.contactNumber != null)
-				return false;
-		} else if (!contactNumber.equals(other.contactNumber))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		return true;
+	public String getLicense() {
+		return license;
 	}
 
-	public void displayDetails() {
-        System.out.println("Member Name: " + firstName + " , " + lastName);
-        System.out.println("Member contact details: " + contactNumber + " , " + email);
+	public void setLicense(String license) {
+		this.license = license;
+	}
+
+	public ArrayList<MemberCar> getCarList() {
+		return carList;
+	}
+
+	public void setCarList(ArrayList<MemberCar> carList) {
+		this.carList = carList;
+	}
+
+	
+	public static Member findMember(Long memberIdForCarsOwned, ArrayList<Member> members) {
+	    for (Member member : members) {
+	        if (member.getId().equals(memberIdForCarsOwned)) {
+	            return member;
+	        }
+	    }
+	    return null;
+	}
+
+	
+	public void displayCarsOwned() {
+        System.out.println("Number of cars: " + carList.size());
+        System.out.println("Registration Numbers:");
+
+        for (MemberCar memberCar : carList) {
+            System.out.println(memberCar.getCarRegistrationNumber());
+        }
     }
-}	
 
+}
