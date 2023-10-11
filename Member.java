@@ -1,11 +1,10 @@
-package com.data.main;
 
 import java.util.ArrayList;
 
 public class Member {
 	
 	private Long id;
-	private String name;
+	private String mname;
 	private String email;
 	private String contact;
 	private String license;
@@ -16,26 +15,18 @@ public class Member {
 		
 	}
 
-	public Member(Long id, String name, String email, String contact, String license, ArrayList<MemberCar> carList) {
+
+	public Member(Long id, String mname, String email, String contact, String license) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.mname = mname;
 		this.email = email;
 		this.contact = contact;
 		this.license = license;
-		this.carList = carList;
+		
 	}
-	
-	public Member(Long memberId, String firstName, String lastName, String email2, String contactNumber,
-			String licenseNumber) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.contact = contact;
-		this.license = license;
-		// TODO Auto-generated constructor stub
-	}
+
+
 
 	public Long getId() {
 		return id;
@@ -46,11 +37,11 @@ public class Member {
 	}
 
 	public String getName() {
-		return name;
+		return mname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String mname) {
+		this.mname = mname;
 	}
 
 	public String getEmail() {
