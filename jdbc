@@ -1,0 +1,159 @@
+package com.demo.repositories;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
+import com.demo.exceptions.EmployeeNotFoundException;
+import com.demo.model.Employee;
+
+public class EmployeeRepositoryJDBCImpl implements EmployeeRepository{
+	
+	private BasicDataSource dataSource;
+	
+	public EmployeeRepositoryJDBCImpl(BasicDataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	@Override
+	public void addEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		
+		String insertQuery = "INSERT INTO employee_table(empId,empName,city,salary) "
+				+ "values(?, ?, ?, ?)";
+	
+		try {
+			
+			Connection connection = this.dataSource.getConnection();
+			
+			//create the statement object 
+			
+			//execute the statements 
+			
+			//close the connection
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+			preparedStatement.setInt(1, employee.getEmpId());
+			preparedStatement.setString(2, employee.getName());
+			preparedStatement.setString(3, employee.getCity());
+			preparedStatement.setDouble(4, employee.getSalary());
+
+
+			int rowsAffected = preparedStatement.executeUpdate();		
+
+			if(rowsAffected > 0)
+				System.out.println("Record is inserted");
+			else 
+				System.out.println("Record not inserted");
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public Employee getEmployee(int empId) throws EmployeeNotFoundException {
+		// TODO Auto-generated method stub
+		Employee employee = null;
+		String getEmpQuery = "SELECT * FROM employee_table WHERE empId = ?";
+	
+		try {
+			
+			Connection connection = this.dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(getEmpQuery);
+			preparedStatement.setInt(1, empId);
+
+			ResultSet resultset = preparedStatement.executeQuery();
+			if(resultset.next()) {
+				int  eId = resultset.getInt("empId");
+				String eName = resultset.getString("empName");
+				String eCity = resultset.getString("city");
+				double eSalary = resultset.getDouble("salary");
+				
+				employee = new Employee(eId,eName,eCity,eSalary);
+			}
+				
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return employee;
+	}
+
+	@Override
+	public ArrayList<Employee> getAllEmployees() {
+		ArrayList<Employee> employees = new ArrayList<>();
+		String getEmpQuery = "SELECT * FROM employee_table";
+		
+		try {
+			
+			Connection connection = this.dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(getEmpQuery);
+
+			ResultSet resultset = preparedStatement.executeQuery();
+			if(resultset.next()) {
+				int  eId = resultset.getInt("empId");
+				String eName = resultset.getString("empName");
+				String eCity = resultset.getString("city");
+				double eSalary = resultset.getDouble("salary");
+				
+				Employee employee = new Employee(eId,eName,eCity,eSalary);
+				employees.add(employee);
+				
+			}
+				
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return employees;
+	}
+
+	@Override
+	public void deleteEmployee(int empId) throws EmployeeNotFoundException {
+		// TODO Auto-generated method stub
+		String deleteEmpQuery = "DELETE FROM employee_table WHERE empId = ?";
+		
+		try {
+			
+			Connection connection = this.dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(deleteEmpQuery);
+
+			preparedStatement.setInt(1, empId);
+			
+			int rowsAffected = preparedStatement.executeUpdate();
+			if(rowsAffected > 0) {
+				System.out.println("Employee deleted Succesfully");
+			}else {
+				System.out.println("Employee not Found"  + empId);
+			}
+				
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+}
+
+
+
+
