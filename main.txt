@@ -1,1 +1,35 @@
-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
+import java.util.function.Predicate;
+
+public class PredicateDemo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int [] numsArr = {23,54,3,6,45,2,5,54,56,34,2,11,33};
+		
+		 
+		Predicate<Integer> evenNumPredicate = (t) -> t % 2 == 0;
+		Predicate<Integer> oddNumPredicate = (t) -> t % 2 == 1;
+		Predicate<Integer> numPredicate = (t) -> t > 30;
+		
+		Predicate<Integer> combinePredicate = evenNumPredicate.and(numPredicate);
+//				new Predicate<Integer>() {
+//			
+//			@Override
+//			public boolean test(t % 2 == 0;Integer t) {
+//				// TODO Auto-generated method stub
+//				return t % 2 == 0;
+//			}
+//		};
+//		System.out.println();
+		show(numsArr,numPredicate);
+		
+	}
+	
+	public static void show(int[] arr, Predicate<Integer> predicate) {
+		for(int value : arr) {
+			if(predicate.test(value))
+				System.out.println(value);
+		}
+	}
+}
