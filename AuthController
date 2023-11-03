@@ -1,0 +1,55 @@
+
+
+package com.demo.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.demo.dto.LoginDto;
+import com.demo.services.AuthService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+@RestController
+@RequestMapping("api/auth")
+public class AuthController {
+	
+	@Autowired
+	private AuthService authservice;
+	
+	@PostMapping("/login")
+	public String login(@RequestBody LoginDto loginDto) {
+		
+		return null;
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+package com.demo.dto;
+
+public class LoginDto {
+	private String userNameorEmail;
+	private String password;
+	
+	
+	public LoginDto() {
+		super();
+	}
+	public String getUserNameorEmail() {
+		return userNameorEmail;
+	}
+	public void setUserNameorEmail(String userNameorEmail) {
+		this.userNameorEmail = userNameorEmail;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+}
