@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.demo.dto.LoginDto;
+import com.demo.dto.RegisterDto;
+import com.demo.entities.User;
+import com.demo.repositories.UserRepository;
 
 @Service
 public class AuthService {
@@ -15,14 +19,33 @@ public class AuthService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Autowired
+	private UserRepository userRepository;
+
 	public String login(LoginDto loginDto) {
 		
-		UsernamePasswordAuthenticationToken authRepo = 
-				new UsernamePasswordAuthenticationToken(loginDto.getUserNameorEmail(), loginDto.getPassword());
-		Authentication authentication = authenticationManager.authenticate(authRepo);
-		
+
+		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(
+				loginDto.getUsernameOrEmail(), loginDto.getPassword());
+
+		Authentication authentication = authenticationManager.authenticate(authReq);
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		return "user logged in succesfullly";
-		
+
+		return "User logged in successfully";
+
 	}
+	
+	 public String register(RegisterDto registerDto) {
+	        
+	        User user = new User();
+	        user.setName(registerDto.getUsername());
+	        user.setEmail(registerDto.getEmail());
+	        user.setPassword(registerDto.getPassword());
+
+	        userRepository.save(user);
+
+	        return "User registered successfully";
+	    }
+
 }
